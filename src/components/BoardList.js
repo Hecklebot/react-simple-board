@@ -34,6 +34,9 @@ const BoardList = ({ post, visible, showModal, closeModal }) => {
         onCancel={closeModal}
         okButtonProps = {{ disabled: false }}
         cancelButtonProps = {{disabled: false }}
+        okText = "작성"
+        cancelText = "취소"
+        destroyOnClose = {true}
       >
         <Typography level={4}>Title</Typography>
         <Input type="text" placeholder="제목을 입력하세요." />
