@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-const App = ({ post, visible }) => {
+const App = ({ post, visible, showModal, closeModal }) => {
   return (
     <div className="App">
       <div>Simple Board</div>

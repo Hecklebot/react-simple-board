@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table, Button, Modal } from 'antd';
+import { Table, Button, Modal, Input, Typography } from 'antd';
 
 const column = [
   {
@@ -20,7 +20,7 @@ const column = [
   },
 ]
 
-const BoardList = ({ post, showModal, closeModal }) => {
+const BoardList = ({ post, visible, showModal, closeModal }) => {
   console.log(showModal, closeModal);
   return (
     <div className="boardList">
@@ -29,12 +29,16 @@ const BoardList = ({ post, showModal, closeModal }) => {
 
       <Modal
         title="Create post"
-        visible={false}
-        okButtonProps = {{ disabled: true}}
-        cancelButtonProps = {{disabled: false}}
+        visible={visible}
+        onOk={closeModal}
+        onCancel={closeModal}
+        okButtonProps = {{ disabled: false }}
+        cancelButtonProps = {{disabled: false }}
       >
-        <input type="text" placeholder="제목을 입력하세요."></input>
-        <input type="text" placeholder="내용을 입력하세요."></input>
+        <Typography level={4}>Title</Typography>
+        <Input type="text" placeholder="제목을 입력하세요." />
+        <Typography level={4}>Content</Typography>
+        <Input.TextArea rows={6} placeholder="내용을 입력하세요." />
       </Modal>
     </div>
   );

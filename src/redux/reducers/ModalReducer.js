@@ -6,7 +6,8 @@ const initState = {
 
 export default function ModalReducer(state = initState, action) {
   switch(action.type) {
-    case SHOW_MODAL: 
+    case SHOW_MODAL:
+      console.log('showModal');
       return {
         ...state,
         visible: true,
