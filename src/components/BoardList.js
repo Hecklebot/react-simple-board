@@ -7,7 +7,9 @@ const BoardList = ({ posts, visible, showModal, closeModal, addPost, inputTitle,
     {title: '번호', dataIndex: 'key', key: 'id',},
     {title: '제목', dataIndex: 'title', key: 'title',},
     {title: '작성일', dataIndex: 'createdDate', key: 'createdDate',},
-    {title: '삭제', key: 'delete', render: () => <Button type="link" onClick={(e) => {e.target.parentNode.parentNode.remove()}}>삭제</Button>,}, // parentNode 써도 되는지?
+    {title: '삭제', key: 'delete', render: () => <Button type="link" onClick={(e) => {e.target.parentNode.parentNode.remove()}}>삭제</Button>,}, 
+    // parentNode 써도 되는지?
+    // 이벤트 App으로 빼서 리듀서에 전달하기
   ]
   
   const newPost = {

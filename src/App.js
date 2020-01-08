@@ -1,10 +1,10 @@
-import React, { Children } from 'react';
+import React, { Children, useEffect } from 'react';
 import './App.css';
 import BoardList from './components/BoardList';
 import { connect } from 'react-redux';
 import { Typography } from 'antd';
 import 'antd/dist/antd.css';
-import { addPost, showModal, closeModal, inputTitle, inputContent } from './redux/actions/BoardActions';
+import { appInit, addPost, showModal, closeModal, inputTitle, inputContent } from './redux/actions/BoardActions';
 
 const mapToStateToProps = state => {
   const { posts, title, content, visible } = state.BoardReducer;
@@ -17,6 +17,7 @@ const mapToStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
+  appInit: posts => dispatch(appInit(posts)),
   addPost: post => dispatch(addPost(post)),
   showModal: () => dispatch(showModal()),
   closeModal: () => dispatch(closeModal()),
@@ -25,6 +26,10 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const App = ({ inputTitle, inputContent, posts, visible, showModal, closeModal, addPost, title, content }) => {
+  useEffect(() => {
+    appInit();
+  }, []);
+
   return (
     <div className="App">
       <Typography.Title level={1}>Simple Board</Typography.Title>
