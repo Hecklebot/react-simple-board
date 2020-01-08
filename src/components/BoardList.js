@@ -2,22 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Button, Modal, Input, Typography } from 'antd';
 
-const column = [
-  {title: '번호', dataIndex: 'key', key: 'id',},
-  {title: '제목', dataIndex: 'title', key: 'title',},
-  {title: '내용', dataIndex: 'content', key: 'content',},
-  {title: '작성일', dataIndex: 'createdDate', key: 'createdDate',},
-]
-
-
-const BoardList = ({ post, visible, showModal, closeModal, addPost, inputTitle, inputContent, title, content }) => {
+const BoardList = ({ posts, visible, showModal, closeModal, addPost, inputTitle, inputContent, title, content }) => {
+  const column = [
+    {title: '번호', dataIndex: 'key', key: 'id',},
+    {title: '제목', dataIndex: 'title', key: 'title',},
+    {title: '작성일', dataIndex: 'createdDate', key: 'createdDate',},
+    {title: '삭제', key: 'delete', render: () => <Button type="link" onClick={(e) => {e.target.parentNode.parentNode.remove()}}>삭제</Button>,}, // parentNode 써도 되는지?
+  ]
+  
   const newPost = {
     title,
     content,
   }
+
   return (
     <div className="boardList">
-      <Table dataSource={post} columns={column} />
+      <Table 
+        dataSource={posts} 
+        columns={column} 
+        expandedRowRender={record => <p>{record.content}</p>} 
+        // expandRowByClick="true"
+      />
       <Button type="primary" onClick={showModal}>새 글</Button>
 
       <Modal
@@ -29,7 +34,6 @@ const BoardList = ({ post, visible, showModal, closeModal, addPost, inputTitle, 
         cancelButtonProps = {{ disabled: false }}
         okText = "작성"
         cancelText = "취소"
-        destroyOnClose = {true}
       >
         <Typography.Title level={4}>Title</Typography.Title>
         <Input value={title} placeholder="제목을 입력하세요." onChange={(e) => inputTitle(e.target.value)} />
@@ -41,7 +45,16 @@ const BoardList = ({ post, visible, showModal, closeModal, addPost, inputTitle, 
 };
 
 BoardList.propTypes = {
-  post: PropTypes.array,
+  posts: PropTypes.array,
+  visible: PropTypes.bool,
+  showModal: PropTypes.func,
+  closeModal: PropTypes.func,
+  addPost: PropTypes.func,
+  inputTitle: PropTypes.func,
+  inputContent: PropTypes.func,
+  title: PropTypes.string,
+  content: PropTypes.string,
 } 
+
 
 export default BoardList;

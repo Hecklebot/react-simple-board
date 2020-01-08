@@ -7,13 +7,12 @@ import 'antd/dist/antd.css';
 import { addPost, showModal, closeModal, inputTitle, inputContent } from './redux/actions/BoardActions';
 
 const mapToStateToProps = state => {
-  const { post, title, content, visible, newPost } = state.BoardReducer;
+  const { posts, title, content, visible } = state.BoardReducer;
   return {
-    post,
+    posts,
     title,
     content,
     visible,
-    newPost,
   };
 };
 
@@ -25,12 +24,12 @@ const mapDispatchToProps = dispatch => ({
   inputContent: content => dispatch(inputContent(content)),
 })
 
-const App = ({ inputTitle, inputContent, post, visible, showModal, closeModal, addPost, title, content}) => {
+const App = ({ inputTitle, inputContent, posts, visible, showModal, closeModal, addPost, title, content }) => {
   return (
     <div className="App">
       <Typography.Title level={1}>Simple Board</Typography.Title>
       <BoardList 
-        post={post} 
+        posts={posts} 
         visible={visible} 
         showModal={showModal} 
         closeModal={closeModal}
