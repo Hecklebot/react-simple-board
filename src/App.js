@@ -4,16 +4,14 @@ import BoardList from './components/BoardList';
 import { connect } from 'react-redux';
 import { Typography } from 'antd';
 import 'antd/dist/antd.css';
-import { showModal, closeModal, inputTitle, inputContent } from './redux/actions/ModalActions';
-import { addPost } from './redux/actions/BoardActions';
+import { addPost, showModal, closeModal, inputTitle, inputContent } from './redux/actions/BoardActions';
 
 const mapToStateToProps = state => {
-  const { post } = state.BoardReducer;
-  const { inputTitle, inputContent, visible, newPost } = state.ModalReducer;
+  const { post, title, content, visible, newPost } = state.BoardReducer;
   return {
-    inputTitle,
-    inputContent,
     post,
+    title,
+    content,
     visible,
     newPost,
   };
@@ -27,18 +25,20 @@ const mapDispatchToProps = dispatch => ({
   inputContent: content => dispatch(inputContent(content)),
 })
 
-const App = ({ inputTitle, inputContent, post, visible, showModal, closeModal, addPost}) => {
+const App = ({ inputTitle, inputContent, post, visible, showModal, closeModal, addPost, title, content}) => {
   return (
     <div className="App">
-      <Typography level={1}>Simple Board</Typography>
+      <Typography.Title level={1}>Simple Board</Typography.Title>
       <BoardList 
         post={post} 
         visible={visible} 
         showModal={showModal} 
         closeModal={closeModal}
         addPost={addPost}
-        inputTitle={inputTitle}
-        inputContent={inputContent}
+        inputTitle={inputTitle} // function
+        inputContent={inputContent} // function
+        title={title} // string 
+        content={content} // string
       >
         {Children}
       </BoardList>

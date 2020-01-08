@@ -3,25 +3,18 @@ import PropTypes from 'prop-types';
 import { Table, Button, Modal, Input, Typography } from 'antd';
 
 const column = [
-  {
-    title: '번호',
-    dataIndex: 'key',
-    key: 'id',
-  },
-  {
-    title: '제목',
-    dataIndex: 'title',
-    key: 'title',
-  },
-  {
-    title: '작성일',
-    dataIndex: 'createdDate',
-    key: 'createdDate',
-  },
+  {title: '번호', dataIndex: 'key', key: 'id',},
+  {title: '제목', dataIndex: 'title', key: 'title',},
+  {title: '내용', dataIndex: 'content', key: 'content',},
+  {title: '작성일', dataIndex: 'createdDate', key: 'createdDate',},
 ]
 
 
-const BoardList = ({ post, visible, showModal, closeModal, addPost, inputTitle, inputContent }) => {
+const BoardList = ({ post, visible, showModal, closeModal, addPost, inputTitle, inputContent, title, content }) => {
+  const newPost = {
+    title,
+    content,
+  }
   return (
     <div className="boardList">
       <Table dataSource={post} columns={column} />
@@ -30,7 +23,7 @@ const BoardList = ({ post, visible, showModal, closeModal, addPost, inputTitle, 
       <Modal
         title={<Typography.Title level={2}>Create post</Typography.Title>}
         visible={visible}
-        onOk={() => addPost({key: 4, title:'title', content:'content'})}
+        onOk={() => addPost(newPost)}
         onCancel={closeModal}
         okButtonProps = {{ disabled: false }}
         cancelButtonProps = {{ disabled: false }}
@@ -39,9 +32,9 @@ const BoardList = ({ post, visible, showModal, closeModal, addPost, inputTitle, 
         destroyOnClose = {true}
       >
         <Typography.Title level={4}>Title</Typography.Title>
-        <Input name="inputTitle" placeholder="제목을 입력하세요." onChange={(e) => inputTitle(e.target.value)} />
+        <Input value={title} placeholder="제목을 입력하세요." onChange={(e) => inputTitle(e.target.value)} />
         <Typography.Title level={4}>Content</Typography.Title>
-        <Input.TextArea rows={6} placeholder="내용을 입력하세요." onChange={(e) => inputContent(e.target.value)} />
+        <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={(e) => inputContent(e.target.value)} />
       </Modal>
     </div>
   );
