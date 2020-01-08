@@ -30,6 +30,12 @@ export default function BoardReducer(state = initState, action) {
     case ADD_POST:
       return {
         ...state,
+        post: state.post.concat({
+          key: action.payload.key,
+          title: <Button type="link">{action.payload.title}</Button>,
+          content: action.payload.content,
+          createdDate: new Date().getTime(),
+        }),
       }
     case UPDATE_POST:
       return {

@@ -20,28 +20,28 @@ const column = [
   },
 ]
 
-const BoardList = ({ post, visible, showModal, closeModal }) => {
-  console.log(showModal, closeModal);
+
+const BoardList = ({ post, visible, showModal, closeModal, addPost, inputTitle, inputContent }) => {
   return (
     <div className="boardList">
       <Table dataSource={post} columns={column} />
       <Button type="primary" onClick={showModal}>새 글</Button>
 
       <Modal
-        title="Create post"
+        title={<Typography.Title level={2}>Create post</Typography.Title>}
         visible={visible}
-        onOk={closeModal}
+        onOk={() => addPost({key: 4, title:'title', content:'content'})}
         onCancel={closeModal}
         okButtonProps = {{ disabled: false }}
-        cancelButtonProps = {{disabled: false }}
+        cancelButtonProps = {{ disabled: false }}
         okText = "작성"
         cancelText = "취소"
         destroyOnClose = {true}
       >
-        <Typography level={4}>Title</Typography>
-        <Input type="text" placeholder="제목을 입력하세요." />
-        <Typography level={4}>Content</Typography>
-        <Input.TextArea rows={6} placeholder="내용을 입력하세요." />
+        <Typography.Title level={4}>Title</Typography.Title>
+        <Input name="inputTitle" placeholder="제목을 입력하세요." onChange={(e) => inputTitle(e.target.value)} />
+        <Typography.Title level={4}>Content</Typography.Title>
+        <Input.TextArea rows={6} placeholder="내용을 입력하세요." onChange={(e) => inputContent(e.target.value)} />
       </Modal>
     </div>
   );
