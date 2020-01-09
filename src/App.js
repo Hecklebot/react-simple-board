@@ -5,10 +5,12 @@ import { connect } from 'react-redux';
 import { Typography } from 'antd';
 import 'antd/dist/antd.css';
 import { appInit, addPost, showModal, closeModal, inputTitle, inputContent } from './redux/actions/BoardActions';
+import axios from 'axios';
 
 const mapToStateToProps = state => {
-  const { posts, title, content, visible } = state.BoardReducer;
+  const { isLoading, posts, title, content, visible } = state.BoardReducer;
   return {
+    isLoading,
     posts,
     title,
     content,
@@ -25,15 +27,22 @@ const mapDispatchToProps = dispatch => ({
   inputContent: content => dispatch(inputContent(content)),
 })
 
-const App = ({ inputTitle, inputContent, posts, visible, showModal, closeModal, addPost, title, content }) => {
-  useEffect(() => {
-    appInit();
-  }, []);
+const App = ({ appInit, inputTitle, inputContent, posts, visible, showModal, closeModal, addPost, title, content }) => {
 
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios.get('https://react-simple-board.firebaseio.com/post.json');
+      const data = result.data;
+      appInit(Object.values(data));
+    };
+    
+    fetchData();
+  }, [appInit]);
+  console.log(posts)
   return (
     <div className="App">
       <Typography.Title level={1}>Simple Board</Typography.Title>
-      <BoardList 
+      <BoardList
         posts={posts} 
         visible={visible} 
         showModal={showModal} 

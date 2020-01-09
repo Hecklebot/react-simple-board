@@ -4,10 +4,10 @@ import { Table, Button, Modal, Input, Typography } from 'antd';
 
 const BoardList = ({ posts, visible, showModal, closeModal, addPost, inputTitle, inputContent, title, content }) => {
   const column = [
-    {title: '번호', dataIndex: 'key', key: 'id',},
+    {title: '번호', dataIndex: 'key', key: 'key',},
     {title: '제목', dataIndex: 'title', key: 'title',},
     {title: '작성일', dataIndex: 'createdDate', key: 'createdDate',},
-    {title: '삭제', key: 'delete', render: () => <Button type="link" onClick={(e) => {e.target.parentNode.parentNode.remove()}}>삭제</Button>,}, 
+    {title: '', key: 'delete', render: () => <Button type="link" onClick={(e) => {e.target.parentNode.parentNode.remove()}}>삭제</Button>,}, 
     // parentNode 써도 되는지?
     // 이벤트 App으로 빼서 리듀서에 전달하기
   ]
@@ -22,8 +22,8 @@ const BoardList = ({ posts, visible, showModal, closeModal, addPost, inputTitle,
       <Table 
         dataSource={posts} 
         columns={column} 
-        expandedRowRender={record => <p>{record.content}</p>} 
-        // expandRowByClick="true"
+        expandedRowRender={record => <p>{record.content}</p>}
+        rowKey={record => record.key}
       />
       <Button type="primary" onClick={showModal}>새 글</Button>
 
@@ -32,8 +32,6 @@ const BoardList = ({ posts, visible, showModal, closeModal, addPost, inputTitle,
         visible={visible}
         onOk={() => addPost(newPost)}
         onCancel={closeModal}
-        okButtonProps = {{ disabled: false }}
-        cancelButtonProps = {{ disabled: false }}
         okText = "작성"
         cancelText = "취소"
       >
