@@ -8,15 +8,16 @@ function* addData(data) {
   const putData = {
     id: getData === null ? 1 : Object.values(getData)[Object.values(getData).length - 1].id + 1,
     key: new Date().getTime(),
-    // key: uuidv1().substring(0,8),
     title: data.payload.title,
     content: data.payload.content,
     createdDate: new Date().getTime(),
   }
-  yield axios.put(`https://react-simple-board.firebaseio.com/post/${putData.createdDate}.json`, putData);
+  yield axios.put(`https://react-simple-board.firebaseio.com/post/${putData.key}.json`, putData);
+  // yield put ({type: 'ADD_POST', payload: putData});
 }
 
 function* deleteData(key) {
+  console.log(key)
   yield axios.delete(`https://react-simple-board.firebaseio.com/post/${key.payload}.json`)
 }
 
