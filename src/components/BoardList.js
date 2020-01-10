@@ -2,28 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Button, Modal, Input, Typography } from 'antd';
 
-const BoardList = ({ posts, visible, showModal, closeModal, addPost, inputTitle, inputContent, title, content }) => {
+const BoardList = ({ id, posts, visible, showModal, closeModal, addPost, inputTitle, inputContent, title, content }) => {
   const column = [
-    {title: '번호', dataIndex: 'key', key: 'key',},
+    {title: '번호', dataIndex: 'id', key: 'id',},
     {title: '제목', dataIndex: 'title', key: 'title',},
     {title: '작성일', dataIndex: 'createdDate', key: 'createdDate',},
-    {title: '', key: 'delete', render: () => <Button type="link" onClick={(e) => {e.target.parentNode.parentNode.remove()}}>삭제</Button>,}, 
-    // parentNode 써도 되는지?
-    // 이벤트 App으로 빼서 리듀서에 전달하기
   ]
   
   const newPost = {
+    id,
     title,
     content,
   }
-
+  
   return (
     <div className="boardList">
       <Table 
         dataSource={posts} 
         columns={column} 
         expandedRowRender={record => <p>{record.content}</p>}
-        rowKey={record => record.key}
       />
       <Button type="primary" onClick={showModal}>새 글</Button>
 

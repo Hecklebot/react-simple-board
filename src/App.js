@@ -6,10 +6,12 @@ import { Typography } from 'antd';
 import 'antd/dist/antd.css';
 import { appInit, addPost, showModal, closeModal, inputTitle, inputContent } from './redux/actions/BoardActions';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 const mapToStateToProps = state => {
-  const { isLoading, posts, title, content, visible } = state.BoardReducer;
+  const { id, isLoading, posts, title, content, visible } = state.BoardReducer;
   return {
+    id,
     isLoading,
     posts,
     title,
@@ -27,22 +29,25 @@ const mapDispatchToProps = dispatch => ({
   inputContent: content => dispatch(inputContent(content)),
 })
 
-const App = ({ appInit, inputTitle, inputContent, posts, visible, showModal, closeModal, addPost, title, content }) => {
+const App = ({ id, appInit, inputTitle, inputContent, posts, visible, showModal, closeModal, addPost, title, content }) => {
 
   useEffect(() => {
     async function fetchData() {
       const result = await axios.get('https://react-simple-board.firebaseio.com/post.json');
       const data = result.data;
-      appInit(Object.values(data));
+      if(data !== null) {
+        appInit(Object.values(data));
+      };
+
     };
     
     fetchData();
   }, [appInit]);
-  console.log(posts)
   return (
     <div className="App">
       <Typography.Title level={1}>Simple Board</Typography.Title>
       <BoardList
+        id={id}
         posts={posts} 
         visible={visible} 
         showModal={showModal} 
@@ -58,5 +63,19 @@ const App = ({ appInit, inputTitle, inputContent, posts, visible, showModal, clo
     </div>
   );
 }
+
+App.propTypes = {
+  id: PropTypes.number,
+  appInit: PropTypes.func,
+  inputTitle: PropTypes.func,
+  inputContent: PropTypes.func,
+  posts: PropTypes.array,
+  visible: PropTypes.bool,
+  showModal: PropTypes.func,
+  closeModal: PropTypes.func,
+  addPost: PropTypes.func,
+  title: PropTypes.string,
+  content: PropTypes.string,
+};
 
 export default connect(mapToStateToProps, mapDispatchToProps)(App);
