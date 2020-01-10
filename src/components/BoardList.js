@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Button, Modal, Input, Typography } from 'antd';
+import { Route } from 'react-router-dom';
+import BoardDetail from './BoardDetail';
 
 const BoardList = ({ id, posts, visible, showModal, closeModal, addPost, updatePost, deletePost, inputTitle, inputContent, title, content }) => {
   const column = [
@@ -42,6 +44,8 @@ const BoardList = ({ id, posts, visible, showModal, closeModal, addPost, updateP
         <Typography.Title level={4}>Content</Typography.Title>
         <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value)} />
       </Modal>
+
+      <Route path='/detail' component={BoardDetail}></Route>
     </div>
   );
 };

@@ -17,10 +17,11 @@ export default function BoardReducer(state = initState, action) {
         posts: state.posts.concat(action.payload),
       };
     case ADD_POST:
+      console.log(state.posts)
       return {
         ...state,
         posts: state.posts.concat({
-          id: state.posts[state.posts.length - 1].id + 1,
+          id: state.posts.length === 0 ? 1 : state.posts[state.posts.length - 1].id + 1,
           key: uuidv1().substring(0,8),
           title: state.title,
           content: state.content,
@@ -42,6 +43,7 @@ export default function BoardReducer(state = initState, action) {
         ...state,
         posts: state.posts.filter(item => item.key !== parseInt(action.payload)),
       };
+      
     case SHOW_MODAL:
       return {
         ...state,

@@ -51,7 +51,7 @@ const App = ({
     const fetchData = async () => {
       const result = await axios.get('https://react-simple-board.firebaseio.com/post.json');
       const data = result.data;
-      if(data !== null) {
+      if(data) {
         appInit(Object.values(data));
       };
     };
@@ -70,10 +70,10 @@ const App = ({
         addPost={addPost}
         updatePost={updatePost}
         deletePost={deletePost}
-        inputTitle={inputTitle} // function
-        inputContent={inputContent} // function
-        title={title} // string 
-        content={content} // string
+        inputTitle={inputTitle}
+        inputContent={inputContent}
+        title={title}
+        content={content}
       />
     </div>
   );
