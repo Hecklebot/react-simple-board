@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Button, Modal, Input, Typography } from 'antd';
 
-const BoardList = ({ id, posts, visible, showModal, closeModal, addPost, inputTitle, inputContent, title, content }) => {
+const BoardList = ({ id, posts, visible, showModal, closeModal, addPost, updatePost, deletePost, inputTitle, inputContent, title, content }) => {
   const column = [
     {title: '번호', dataIndex: 'id', key: 'id',},
     {title: '제목', dataIndex: 'title', key: 'title',},
     {title: '작성일', dataIndex: 'createdDate', key: 'createdDate',},
+    {title: '', dataIndex: '', key: '', 
+      render: () => 
+        <Button type="danger" onClick={e => deletePost(e.target.parentNode.parentNode.attributes[1].value)}>del</Button>
+    },
   ]
   
   const newPost = {
@@ -18,9 +22,10 @@ const BoardList = ({ id, posts, visible, showModal, closeModal, addPost, inputTi
   return (
     <div className="boardList">
       <Table 
-        dataSource={posts} 
-        columns={column} 
+        dataSource={posts}
+        columns={column}
         expandedRowRender={record => <p>{record.content}</p>}
+        pagination={{pageSize:20}}
       />
       <Button type="primary" onClick={showModal}>새 글</Button>
 
@@ -33,9 +38,9 @@ const BoardList = ({ id, posts, visible, showModal, closeModal, addPost, inputTi
         cancelText = "취소"
       >
         <Typography.Title level={4}>Title</Typography.Title>
-        <Input value={title} placeholder="제목을 입력하세요." onChange={(e) => inputTitle(e.target.value)} />
+        <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value)} />
         <Typography.Title level={4}>Content</Typography.Title>
-        <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={(e) => inputContent(e.target.value)} />
+        <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value)} />
       </Modal>
     </div>
   );

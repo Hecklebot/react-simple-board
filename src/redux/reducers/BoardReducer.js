@@ -1,4 +1,4 @@
-import { APP_INIT, ADD_POST, UPDATE_POST, SHOW_MODAL, CLOSE_MODAL, INPUT_TITLE, INPUT_CONTENT } from '../actions/BoardActions';
+import { APP_INIT, ADD_POST, UPDATE_POST, DELETE_POST, SHOW_MODAL, CLOSE_MODAL, INPUT_TITLE, INPUT_CONTENT } from '../actions/BoardActions';
 
 const initState = {
   id: 1,
@@ -17,11 +17,10 @@ export default function BoardReducer(state = initState, action) {
         posts: state.posts.concat(action.payload),
       };
     case ADD_POST:
-      console.log(action.payload)
       return {
         ...state,
         posts: state.posts.concat({
-          id: state.posts.length + 1,
+          id: state.posts[state.posts.length - 1].id + 1,
           key: uuidv1().substring(0,8),
           title: state.title,
           content: state.content,
@@ -37,7 +36,12 @@ export default function BoardReducer(state = initState, action) {
       return {
         ...state,
       };
-
+    
+    case DELETE_POST:
+      return  {
+        ...state,
+        posts: state.posts.filter(item => item.key !== parseInt(action.payload)),
+      };
     case SHOW_MODAL:
       return {
         ...state,

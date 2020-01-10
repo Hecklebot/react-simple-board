@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BoardDetail = ({/* props */}) => {
+const BoardDetail = ({ match }) => {
   return (
     <div>
       BoardDetail
