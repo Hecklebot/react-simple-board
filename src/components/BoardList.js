@@ -24,38 +24,6 @@ const BoardList = ({
     { title: '번호', dataIndex: 'id', key: 'id' },
     { title: '제목', dataIndex: 'title', key: 'title' },
     { title: '작성일', dataIndex: 'createdDate', key: 'createdDate' },
-    {
-      title: '',
-      dataIndex: '',
-      key: '',
-      render: () => (
-        <Button
-          type="danger"
-          onClick={e => {
-            e.stopPropagation();
-            deletePost(getKey);
-          }}
-        >
-          Delete
-        </Button>
-      ),
-    },
-    {
-      title: '',
-      dataIndex: '',
-      key: '',
-      render: ({ key, title, content }) => (
-        <Button
-          type="primary"
-          onClick={e => {
-            e.stopPropagation();
-            showSecondModal({ key, title, content });
-          }}
-        >
-          Update
-        </Button>
-      ),
-    },
   ];
 
   const newPost = {
@@ -70,7 +38,36 @@ const BoardList = ({
       <Table
         dataSource={posts}
         columns={column}
-        expandedRowRender={record => <p>{record.content}</p>}
+        expandedRowRender={record => (
+          <div>
+            <p>{record.content}</p>
+            <Button
+              type="primary"
+              onClick={e => {
+                const getValue = posts.filter(item => item.key === getKey);
+                const value = {
+                  key: getValue[0].key,
+                  title: getValue[0].title,
+                  content: getValue[0].content,
+                };
+                e.stopPropagation();
+                showSecondModal({ value });
+              }}
+            >
+              Update
+            </Button>
+
+            <Button
+              type="danger"
+              onClick={e => {
+                e.stopPropagation();
+                deletePost(getKey);
+              }}
+            >
+              Delete
+            </Button>
+          </div>
+        )}
         pagination={{ pageSize: 20 }}
         expandRowByClick
         onRow={record => ({

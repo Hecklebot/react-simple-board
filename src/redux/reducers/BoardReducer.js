@@ -67,12 +67,13 @@ export default function BoardReducer(state = initState, action) {
       };
 
     case SHOW_SECOND_MODAL:
+      console.debug(action.payload.value);
       return {
         ...state,
-        key: action.payload.key,
+        key: action.payload.value.key,
         secondModalVisible: true,
-        title: action.payload.title,
-        content: action.payload.content,
+        title: action.payload.value.title,
+        content: action.payload.value.content,
       };
 
     case CLOSE_MODAL:
