@@ -10,12 +10,15 @@ function* addData(data) {
     key: new Date().getTime(),
     title: data.payload.title,
     content: data.payload.content,
-    createdDate: new Date().getTime(),
+    createdDate: new Date().toString().substring(3,24),
   }
   yield axios.put(`https://react-simple-board.firebaseio.com/post/${putData.key}.json`, putData);
-  // yield put ({type: 'ADD_POST', payload: putData});
 }
-
+function* updateData(post) {
+  console.debug(post);
+  yield console.debug('updateData');
+  // yield axios.update(`https://react-simple-board.firebaseio.com/post/${key??}.json`, {title: post.title, content:post.content})
+}
 function* deleteData(key) {
   console.log(key)
   yield axios.delete(`https://react-simple-board.firebaseio.com/post/${key.payload}.json`)
@@ -23,5 +26,6 @@ function* deleteData(key) {
 
 export default function* watch() {
   yield takeEvery('ADD_POST', addData);
-  yield takeEvery('DELETE_POST', deleteData)
+  yield takeEvery('DELETE_POST', deleteData);
+  yield takeEvery('UPDATE_POST', updateData);
 }

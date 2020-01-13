@@ -10,12 +10,11 @@ const BoardList = ({ id, posts, visible, secondModalVisible, showModal, showSeco
     {title: '작성일', dataIndex: 'createdDate', key: 'createdDate',},
     {title: '', dataIndex: '', key: '', 
       render: () => 
-        // <Button type="danger" onClick={e => deletePost(e.target.parentNode.parentNode.attributes[1].value)}>del</Button>
-        <Button type="danger" onClick={() => deletePost(getKey)}>del</Button>
+        <Button type="danger" onClick={() => deletePost(getKey)}>Delete</Button>
     },
     {title: '', dataIndex: '', key: '', 
-    render: () => 
-      <Button type="primary" onClick={showSecondModal}>update</Button>
+    render: (column, { key, title, content }) =>  
+      <Button type="primary" onClick={() => showSecondModal({ key, title, content })}>Update</Button>
     },
   ]
   
@@ -36,6 +35,9 @@ const BoardList = ({ id, posts, visible, secondModalVisible, showModal, showSeco
           return {
             onMouseEnter: () => {
               getKey = record.key;
+            },
+            onMouseLeave: () => {
+              getKey = record.key;
             }
           }
         }}
@@ -51,15 +53,15 @@ const BoardList = ({ id, posts, visible, secondModalVisible, showModal, showSeco
         cancelText = "취소"
       >
         <Typography.Title level={4}>Title</Typography.Title>
-        <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value)} />
+        <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value, getKey)} />
         <Typography.Title level={4}>Content</Typography.Title>
-        <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value)} />
+        <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value, getKey)} />
       </Modal>
 
       <Modal
         title={<Typography.Title level={2}>Update post</Typography.Title>}
         visible={secondModalVisible}
-        onOk={e => console.log(e.target.value)}
+        onOk={() => updatePost({getKey, title, content})}
         onCancel={closeModal}
         okText = "수정"
         cancelText = "취소"
@@ -67,7 +69,7 @@ const BoardList = ({ id, posts, visible, secondModalVisible, showModal, showSeco
         <Typography.Title level={4}>Title</Typography.Title>
         <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value)} />
         <Typography.Title level={4}>Content</Typography.Title>
-        <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value)} />
+        <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value, getKey)} />
       </Modal>
     </div>
   );

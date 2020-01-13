@@ -20,16 +20,21 @@ const mapToStateToProps = state => {
     secondModalVisible,
   };
 };
-
+// BoardList에서 쓰는 건 BoardList에서 받기?
 const mapDispatchToProps = dispatch => ({
   appInit: posts => dispatch(appInit(posts)),
   addPost: post => dispatch(addPost(post)),
   updatePost: post => dispatch(updatePost(post)),
   deletePost: key => dispatch(deletePost(key)),
   showModal: () => dispatch(showModal()),
-  showSecondModal: () => dispatch(showSecondModal()),
+  showSecondModal: payload => {
+    console.debug(payload);
+    dispatch(showSecondModal(payload))
+  },
   closeModal: () => dispatch(closeModal()),
-  inputTitle: title => dispatch(inputTitle(title)),
+  inputTitle: payload => {
+    dispatch(inputTitle(payload))
+  },
   inputContent: content => dispatch(inputContent(content)),
 })
 

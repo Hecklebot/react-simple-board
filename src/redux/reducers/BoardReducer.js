@@ -1,6 +1,7 @@
 import { APP_INIT, ADD_POST, UPDATE_POST, DELETE_POST, SHOW_MODAL, CLOSE_MODAL, INPUT_TITLE, INPUT_CONTENT, SHOW_SECOND_MODAL } from '../actions/BoardActions';
 
 const initState = {
+  key: 0,
   id: 1,
   visible: false,
   secondModalVisible: false,
@@ -26,7 +27,7 @@ export default function BoardReducer(state = initState, action) {
           key: new Date().getTime(),
           title: state.title,
           content: state.content,
-          createdDate: new Date().getTime(),
+          createdDate: new Date().toString().substring(3,24),
         }),
         id: state.id + 1,
         title: '',
@@ -35,13 +36,27 @@ export default function BoardReducer(state = initState, action) {
       };
 
     case UPDATE_POST:
-      console.log(action.payload)
+      console.debug(state.key, action.payload);
+      const getIndex = state.posts.findIndex(item => item.key === state.key);
       return {
         ...state,
+        posts: state.posts.fill(
+          {
+            id: state.posts[getIndex].id, 
+            key:state.posts[getIndex].key, 
+            title: action.payload.title, 
+            content: action.payload.content, 
+            createdDate:state.posts[getIndex].createdDate
+          },
+          getIndex,
+          getIndex + 1
+        ),
+        secondModalVisible: false,
+        title: '',
+        content: '',
       };
     
     case DELETE_POST:
-      console.log(action.payload)
       return  {
         ...state,
         posts: state.posts.filter(item => item.key !== parseInt(action.payload)),
@@ -57,9 +72,10 @@ export default function BoardReducer(state = initState, action) {
     case SHOW_SECOND_MODAL:
       return {
         ...state,
+        key: action.payload.key,
         secondModalVisible: true,
-        title: '',
-        content: '',
+        title: action.payload.title,
+        content: action.payload.content,
       }
 
     case CLOSE_MODAL:
@@ -72,6 +88,7 @@ export default function BoardReducer(state = initState, action) {
       };
 
     case INPUT_TITLE:
+      console.log(action)
       return {
         ...state,
         title: action.payload,
