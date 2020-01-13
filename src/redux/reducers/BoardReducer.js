@@ -8,18 +8,18 @@ const initState = {
   title: '',
   content: '',
   posts: [],
-}
+};
 
 export default function BoardReducer(state = initState, action) {
   // const uuidv1 = require('uuid/v1');
-  switch(action.type) {
+  const getIndex = state.posts.findIndex(item => item.key === state.key);
+  switch (action.type) {
     case APP_INIT:
       return {
         ...state,
         posts: state.posts.concat(action.payload),
       };
     case ADD_POST:
-      console.log(action.payload)
       return {
         ...state,
         posts: state.posts.concat({
@@ -27,7 +27,7 @@ export default function BoardReducer(state = initState, action) {
           key: new Date().getTime(),
           title: state.title,
           content: state.content,
-          createdDate: new Date().toString().substring(3,24),
+          createdDate: new Date().toString().substring(3, 24),
         }),
         id: state.id + 1,
         title: '',
@@ -36,33 +36,31 @@ export default function BoardReducer(state = initState, action) {
       };
 
     case UPDATE_POST:
-      const getIndex = state.posts.findIndex(item => item.key === state.key);
       return {
         ...state,
         posts: state.posts.fill(
           {
-            id: state.posts[getIndex].id, 
-            key:state.posts[getIndex].key, 
-            title: action.payload.title, 
-            content: action.payload.content, 
-            createdDate:state.posts[getIndex].createdDate
+            id: state.posts[getIndex].id,
+            key: state.posts[getIndex].key,
+            title: action.payload.title,
+            content: action.payload.content,
+            createdDate: state.posts[getIndex].createdDate,
           },
           getIndex,
-          getIndex + 1
+          getIndex + 1,
         ),
         secondModalVisible: false,
         title: '',
         content: '',
       };
-    
+
     case DELETE_POST:
-      return  {
+      return {
         ...state,
-        posts: state.posts.filter(item => item.key !== parseInt(action.payload)),
+        posts: state.posts.filter(item => item.key !== parseInt(action.payload, 10)),
       };
-      
+
     case SHOW_MODAL:
-      console.log(SHOW_MODAL)
       return {
         ...state,
         visible: true,
@@ -75,7 +73,7 @@ export default function BoardReducer(state = initState, action) {
         secondModalVisible: true,
         title: action.payload.title,
         content: action.payload.content,
-      }
+      };
 
     case CLOSE_MODAL:
       return {
@@ -101,6 +99,6 @@ export default function BoardReducer(state = initState, action) {
     default:
       return {
         ...state,
-      }
+      };
   }
 }

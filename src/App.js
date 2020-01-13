@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import BoardList from './components/BoardList';
 import { connect } from 'react-redux';
 import { Typography } from 'antd';
 import 'antd/dist/antd.css';
-import { appInit, addPost, updatePost, deletePost, showModal, showSecondModal, closeModal, inputTitle, inputContent } from './redux/actions/BoardActions';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import BoardList from './components/BoardList';
+import * as actions from './redux/actions/BoardActions';
 
 const mapToStateToProps = state => {
   const { id, isLoading, posts, title, content, visible, secondModalVisible } = state.BoardReducer;
@@ -22,23 +22,22 @@ const mapToStateToProps = state => {
 };
 // BoardList에서 쓰는 건 BoardList에서 받기?
 const mapDispatchToProps = dispatch => ({
-  appInit: posts => dispatch(appInit(posts)),
-  addPost: post => dispatch(addPost(post)),
-  updatePost: post => dispatch(updatePost(post)),
-  deletePost: key => dispatch(deletePost(key)),
-  showModal: () => dispatch(showModal()),
+  appInit: posts => dispatch(actions.appInit(posts)),
+  addPost: post => dispatch(actions.addPost(post)),
+  updatePost: post => dispatch(actions.updatePost(post)),
+  deletePost: key => dispatch(actions.deletePost(key)),
+  showModal: () => dispatch(actions.showModal()),
   showSecondModal: payload => {
-    console.debug(payload);
-    dispatch(showSecondModal(payload))
+    dispatch(actions.showSecondModal(payload));
   },
-  closeModal: () => dispatch(closeModal()),
+  closeModal: () => dispatch(actions.closeModal()),
   inputTitle: payload => {
-    dispatch(inputTitle(payload))
+    dispatch(actions.inputTitle(payload));
   },
-  inputContent: content => dispatch(inputContent(content)),
-})
+  inputContent: content => dispatch(actions.inputContent(content)),
+});
 
-const App = ({ 
+const App = ({
   id,
   key,
   appInit,
@@ -56,16 +55,15 @@ const App = ({
   title,
   content,
 }) => {
-
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get('https://react-simple-board.firebaseio.com/post.json');
-      const data = result.data;
-      if(data) {
+      const { data } = result;
+      if (data) {
         appInit(Object.values(data));
-      };
+      }
     };
-    
+
     fetchData();
   }, [appInit]);
 
@@ -75,7 +73,7 @@ const App = ({
       <BoardList
         id={id}
         key={key}
-        posts={posts} 
+        posts={posts}
         visible={visible}
         secondModalVisible={secondModalVisible}
         showModal={showModal}
@@ -91,18 +89,23 @@ const App = ({
       />
     </div>
   );
-}
+};
 
 App.propTypes = {
   id: PropTypes.number,
+  key: PropTypes.string,
   appInit: PropTypes.func,
   inputTitle: PropTypes.func,
   inputContent: PropTypes.func,
   posts: PropTypes.array,
   visible: PropTypes.bool,
+  secondModalVisible: PropTypes.bool,
   showModal: PropTypes.func,
+  showSecondModal: PropTypes.func,
   closeModal: PropTypes.func,
   addPost: PropTypes.func,
+  updatePost: PropTypes.func,
+  deletePost: PropTypes.func,
   title: PropTypes.string,
   content: PropTypes.string,
 };

@@ -1,4 +1,4 @@
-import { createAction } from 'redux-actions'; 
+import { createAction } from 'redux-actions';
 
 export const APP_INIT = 'APP_INIT';
 export const ADD_POST = 'ADD_POST';

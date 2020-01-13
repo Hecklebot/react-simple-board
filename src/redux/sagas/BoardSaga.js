@@ -12,24 +12,18 @@ function* addData(data) {
     key: new Date().getTime(),
     title: data.payload.title,
     content: data.payload.content,
-    createdDate: new Date().toString().substring(3,24),
-  }
+    createdDate: new Date().toString().substring(3, 24),
+  };
   yield axios.put(`https://react-simple-board.firebaseio.com/post/${putData.key}.json`, putData);
 }
 function* updateData(post) {
-  console.debug(getKey, post);
-  yield axios.patch(
-    `https://react-simple-board.firebaseio.com/post/${getKey}.json`, 
-    {title: post.payload.title, content:post.payload.content}
-  );
+  yield axios.patch(`https://react-simple-board.firebaseio.com/post/${getKey}.json`, { title: post.payload.title, content: post.payload.content });
 }
 function* deleteData(key) {
-  console.log(key)
-  yield axios.delete(`https://react-simple-board.firebaseio.com/post/${key.payload}.json`)
+  yield axios.delete(`https://react-simple-board.firebaseio.com/post/${key.payload}.json`);
 }
 
 function getSecondModalValue(post) {
-  console.log(post.payload.key)
   getKey = post.payload.key;
 }
 
@@ -37,5 +31,5 @@ export default function* watch() {
   yield takeEvery('ADD_POST', addData);
   yield takeEvery('DELETE_POST', deleteData);
   yield takeEvery('UPDATE_POST', updateData);
-  yield takeEvery('SHOW_SECOND_MODAL', getSecondModalValue)
+  yield takeEvery('SHOW_SECOND_MODAL', getSecondModalValue);
 }
