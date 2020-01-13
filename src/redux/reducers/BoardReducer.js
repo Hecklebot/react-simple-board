@@ -11,7 +11,6 @@ const initState = {
 };
 
 export default function BoardReducer(state = initState, action) {
-  // const uuidv1 = require('uuid/v1');
   const getIndex = state.posts.findIndex(item => item.key === state.key);
   switch (action.type) {
     case APP_INIT:
@@ -19,8 +18,8 @@ export default function BoardReducer(state = initState, action) {
         ...state,
         posts: state.posts.concat(action.payload),
       };
+
     case ADD_POST:
-      console.debug(action.payload);
       return {
         ...state,
         posts: state.posts.concat({

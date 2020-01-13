@@ -29,7 +29,13 @@ const BoardList = ({
       dataIndex: '',
       key: '',
       render: () => (
-        <Button type="danger" onClick={() => deletePost(getKey)}>
+        <Button
+          type="danger"
+          onClick={e => {
+            e.stopPropagation();
+            deletePost(getKey);
+          }}
+        >
           Delete
         </Button>
       ),
@@ -39,7 +45,13 @@ const BoardList = ({
       dataIndex: '',
       key: '',
       render: ({ key, title, content }) => (
-        <Button type="primary" onClick={() => showSecondModal({ key, title, content })}>
+        <Button
+          type="primary"
+          onClick={e => {
+            e.stopPropagation();
+            showSecondModal({ key, title, content });
+          }}
+        >
           Update
         </Button>
       ),
@@ -60,6 +72,7 @@ const BoardList = ({
         columns={column}
         expandedRowRender={record => <p>{record.content}</p>}
         pagination={{ pageSize: 20 }}
+        expandRowByClick
         onRow={record => ({
           onMouseEnter: () => {
             getKey = record.key;
