@@ -20,14 +20,15 @@ export default function BoardReducer(state = initState, action) {
         posts: state.posts.concat(action.payload),
       };
     case ADD_POST:
+      console.debug(action.payload);
       return {
         ...state,
         posts: state.posts.concat({
           id: state.posts.length === 0 ? 1 : state.posts[state.posts.length - 1].id + 1,
-          key: new Date().getTime(),
+          key: action.payload.createdDate,
           title: state.title,
           content: state.content,
-          createdDate: new Date().toString().substring(3, 24),
+          createdDate: new Date().toString().substring(3, 21),
         }),
         id: state.id + 1,
         title: '',

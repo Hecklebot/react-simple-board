@@ -9,16 +9,28 @@ function* addData(data) {
   // const uuidv1 = require('uuid/v1');
   const putData = {
     id: !getData ? 1 : Object.values(getData)[Object.values(getData).length - 1].id + 1,
-    key: new Date().getTime(),
+    key: data.payload.createdDate,
     title: data.payload.title,
     content: data.payload.content,
-    createdDate: new Date().toString().substring(3, 24),
+    createdDate: new Date().toString().substring(3, 21),
   };
   yield axios.put(`https://react-simple-board.firebaseio.com/post/${putData.key}.json`, putData);
+
+  // 임시 데이터 넣기
+  // for (let i = 1; i < 50; i += 1) {
+  //   yield axios.put(`https://react-simple-board.firebaseio.com/post/${putData.key + i}.json`, {
+  //     id: i,
+  //     key: new Date().getTime(),
+  //     title: `${i} temp title`,
+  //     content: `${i} temp content`,
+  //     createdDate: new Date().toString().substring(3, 21),
+  //   });
+  // }
 }
 function* updateData(post) {
   yield axios.patch(`https://react-simple-board.firebaseio.com/post/${getKey}.json`, { title: post.payload.title, content: post.payload.content });
 }
+
 function* deleteData(key) {
   yield axios.delete(`https://react-simple-board.firebaseio.com/post/${key.payload}.json`);
 }

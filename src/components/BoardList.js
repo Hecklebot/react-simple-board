@@ -38,20 +38,19 @@ const BoardList = ({
       title: '',
       dataIndex: '',
       key: '',
-      render: (column, { key, title, content }) => (
+      render: ({ key, title, content }) => (
         <Button type="primary" onClick={() => showSecondModal({ key, title, content })}>
           Update
         </Button>
       ),
     },
   ];
-  //   <Button type="primary" onClick={() => showSecondModal({ key, title, content })}>
-  //   Update
-  // </Button>;
+
   const newPost = {
     id,
     title,
     content,
+    createdDate: new Date().getTime(),
   };
 
   return (
