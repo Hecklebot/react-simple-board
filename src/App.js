@@ -40,6 +40,7 @@ const mapDispatchToProps = dispatch => ({
 
 const App = ({ 
   id,
+  key,
   appInit,
   inputTitle,
   inputContent,
@@ -73,6 +74,7 @@ const App = ({
       <Typography.Title level={1}>Simple Board</Typography.Title>
       <BoardList
         id={id}
+        key={key}
         posts={posts} 
         visible={visible}
         secondModalVisible={secondModalVisible}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table, Button, Modal, Input, Typography } from 'antd';
 
-const BoardList = ({ id, posts, visible, secondModalVisible, showModal, showSecondModal, closeModal, addPost, updatePost, deletePost, inputTitle, inputContent, title, content }) => {
+const BoardList = ({ id, key, posts, visible, secondModalVisible, showModal, showSecondModal, closeModal, addPost, updatePost, deletePost, inputTitle, inputContent, title, content }) => {
   let getKey;
   const column = [
     {title: '번호', dataIndex: 'id', key: 'id',},
@@ -61,13 +61,13 @@ const BoardList = ({ id, posts, visible, secondModalVisible, showModal, showSeco
       <Modal
         title={<Typography.Title level={2}>Update post</Typography.Title>}
         visible={secondModalVisible}
-        onOk={() => updatePost({getKey, title, content})}
+        onOk={() => updatePost({ key, title, content })}
         onCancel={closeModal}
         okText = "수정"
         cancelText = "취소"
       >
         <Typography.Title level={4}>Title</Typography.Title>
-        <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value)} />
+        <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value, key)} />
         <Typography.Title level={4}>Content</Typography.Title>
         <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value, getKey)} />
       </Modal>

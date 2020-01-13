@@ -36,7 +36,6 @@ export default function BoardReducer(state = initState, action) {
       };
 
     case UPDATE_POST:
-      console.debug(state.key, action.payload);
       const getIndex = state.posts.findIndex(item => item.key === state.key);
       return {
         ...state,
@@ -88,7 +87,6 @@ export default function BoardReducer(state = initState, action) {
       };
 
     case INPUT_TITLE:
-      console.log(action)
       return {
         ...state,
         title: action.payload,
