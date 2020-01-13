@@ -67,7 +67,6 @@ export default function BoardReducer(state = initState, action) {
       };
 
     case SHOW_SECOND_MODAL:
-      console.debug(action.payload.value);
       return {
         ...state,
         key: action.payload.value.key,
