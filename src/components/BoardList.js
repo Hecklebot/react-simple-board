@@ -4,7 +4,6 @@ import { Table, Button, Modal, Input, Typography } from 'antd';
 
 const BoardList = ({
   id,
-  key,
   isDetail,
   showUpdate,
   posts,
@@ -41,8 +40,7 @@ const BoardList = ({
       <Table
         dataSource={posts}
         columns={column}
-        pagination={{ pageSize: 20 }}
-        expandRowByClick
+        pagination={{ pageSize: 10 }}
         onRow={record => ({
           onMouseEnter: () => {
             getKey = record.key;
@@ -68,7 +66,7 @@ const BoardList = ({
         cancelText="취소"
       >
         <Typography.Title level={4}>Title</Typography.Title>
-        <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value, getKey)} />
+        <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value)} />
         <Typography.Title level={4}>Content</Typography.Title>
         <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value, getKey)} />
       </Modal>
@@ -78,12 +76,7 @@ const BoardList = ({
         visible={secondModalVisible}
         footer={
           isDetail ? (
-            <Button
-              type="primary"
-              onClick={() => {
-                showUpdate();
-              }}
-            >
+            <Button type="primary" onClick={() => showUpdate()}>
               수정
             </Button>
           ) : (
@@ -101,12 +94,7 @@ const BoardList = ({
               >
                 Update
               </Button>,
-              <Button
-                type="danger"
-                onClick={() => {
-                  deletePost();
-                }}
-              >
+              <Button type="danger" onClick={() => deletePost()}>
                 Delete
               </Button>,
             ]
@@ -124,9 +112,9 @@ const BoardList = ({
         ) : (
           <div>
             <Typography.Title level={4}>Title</Typography.Title>
-            <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value, key)} />
+            <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value)} />
             <Typography.Title level={4}>Content</Typography.Title>
-            <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value, getKey)} />
+            <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value)} />
           </div>
         )}
       </Modal>
@@ -136,7 +124,6 @@ const BoardList = ({
 
 BoardList.propTypes = {
   id: PropTypes.number,
-  key: PropTypes.string,
   isDetail: PropTypes.bool,
   showUpdate: PropTypes.func,
   posts: PropTypes.array,

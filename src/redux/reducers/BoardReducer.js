@@ -13,7 +13,6 @@ import {
 
 const initState = {
   key: 0,
-  id: 1,
   isDetail: true,
   visible: false,
   secondModalVisible: false,
@@ -42,7 +41,6 @@ export default function BoardReducer(state = initState, action) {
           content: state.content,
           createdDate: new Date().toString().substring(3, 21),
         }),
-        id: state.id + 1,
         title: '',
         content: '',
         visible: false,

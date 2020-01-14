@@ -27,20 +27,15 @@ const mapDispatchToProps = dispatch => ({
   updatePost: post => dispatch(actions.updatePost(post)),
   deletePost: () => dispatch(actions.deletePost()),
   showModal: () => dispatch(actions.showModal()),
-  showSecondModal: payload => {
-    dispatch(actions.showSecondModal(payload));
-  },
+  showSecondModal: payload => dispatch(actions.showSecondModal(payload)),
   closeModal: () => dispatch(actions.closeModal()),
-  inputTitle: payload => {
-    dispatch(actions.inputTitle(payload));
-  },
+  inputTitle: payload => dispatch(actions.inputTitle(payload)),
   inputContent: content => dispatch(actions.inputContent(content)),
   showUpdate: () => dispatch(actions.showUpdate()),
 });
 
 const App = ({
   id,
-  key,
   isDetail,
   showUpdate,
   appInit,
@@ -75,7 +70,6 @@ const App = ({
       <Typography.Title level={1}>Simple Board</Typography.Title>
       <BoardList
         id={id}
-        key={key}
         isDetail={isDetail}
         showUpdate={showUpdate}
         posts={posts}
@@ -98,7 +92,6 @@ const App = ({
 
 App.propTypes = {
   id: PropTypes.number,
-  key: PropTypes.string,
   appInit: PropTypes.func,
   inputTitle: PropTypes.func,
   inputContent: PropTypes.func,

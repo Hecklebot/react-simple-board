@@ -17,7 +17,7 @@ function* addData(data) {
   yield axios.put(`https://react-simple-board.firebaseio.com/post/${putData.key}.json`, putData);
 
   // 임시 데이터 넣기
-  // for (let i = 1; i < 50; i += 1) {
+  // for (let i = 1; i <= 30; i += 1) {
   //   yield axios.put(`https://react-simple-board.firebaseio.com/post/${putData.key + i}.json`, {
   //     id: i,
   //     key: new Date().getTime(),
