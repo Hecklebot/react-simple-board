@@ -57,22 +57,15 @@ const BoardList = ({
         새 글
       </Button>
 
-      <Modal
-        title={<Typography.Title level={2}>Create post</Typography.Title>}
-        visible={visible}
-        onOk={() => addPost(newPost)}
-        onCancel={closeModal}
-        okText="작성"
-        cancelText="취소"
-      >
-        <Typography.Title level={4}>Title</Typography.Title>
+      <Modal title={<Typography>Create post</Typography>} visible={visible} onOk={() => addPost(newPost)} onCancel={closeModal} okText="작성" cancelText="취소">
+        <Typography>Title</Typography>
         <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value)} />
-        <Typography.Title level={4}>Content</Typography.Title>
+        <Typography>Content</Typography>
         <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value, getKey)} />
       </Modal>
 
       <Modal
-        title={<Typography.Title level={2}>post detail</Typography.Title>}
+        title={<Typography>post detail</Typography>}
         visible={secondModalVisible}
         footer={
           isDetail ? (
@@ -104,16 +97,16 @@ const BoardList = ({
       >
         {isDetail ? (
           <div>
-            <Typography.Title level={4}>Title</Typography.Title>
+            <Typography>Title</Typography>
             <p>{title}</p>
-            <Typography.Title level={4}>Content</Typography.Title>
+            <Typography>Content</Typography>
             <p>{content}</p>
           </div>
         ) : (
           <div>
-            <Typography.Title level={4}>Title</Typography.Title>
+            <Typography>Title</Typography>
             <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value)} />
-            <Typography.Title level={4}>Content</Typography.Title>
+            <Typography>Content</Typography>
             <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value)} />
           </div>
         )}
