@@ -51,7 +51,6 @@ const BoardList = ({
             getKey = record.key;
           },
           onClick: () => {
-            console.debug('onClick', getKey);
             showSecondModal(getKey);
           },
         })}
@@ -83,7 +82,6 @@ const BoardList = ({
               type="primary"
               onClick={() => {
                 showUpdate();
-                console.debug('click update', getKey);
               }}
             >
               수정
