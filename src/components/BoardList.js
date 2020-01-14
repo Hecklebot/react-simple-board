@@ -5,6 +5,8 @@ import { Table, Button, Modal, Input, Typography } from 'antd';
 const BoardList = ({
   id,
   key,
+  isDetail,
+  showUpdate,
   posts,
   visible,
   secondModalVisible,
@@ -20,7 +22,6 @@ const BoardList = ({
   content,
 }) => {
   let getKey;
-  // const getPost = posts.find(item => item.key === getKey);
 
   const column = [
     { title: '번호', dataIndex: 'id', key: 'id' },
@@ -75,48 +76,67 @@ const BoardList = ({
       <Modal
         title={<Typography.Title level={2}>post detail</Typography.Title>}
         visible={secondModalVisible}
-        footer={[
-          <Button
-            type="primary"
-            onClick={e => {
-              const value = {
-                key: getKey,
-                title,
-                content,
-              };
-              e.stopPropagation();
-              updatePost(value);
-            }}
-          >
-            Update
-          </Button>,
-          <Button
-            type="danger"
-            onClick={e => {
-              e.stopPropagation();
-              deletePost(getKey);
-              closeModal();
-            }}
-          >
-            Delete
-          </Button>,
-          <Button
-            onClick={() => {
-              closeModal();
-            }}
-          >
-            close
-          </Button>,
-        ]}
+        footer={
+          isDetail ? (
+            <Button type="primary" onClick={showUpdate}>
+              수정
+            </Button>
+          ) : (
+            [
+              <Button
+                type="primary"
+                onClick={e => {
+                  const value = {
+                    key: getKey,
+                    title,
+                    content,
+                  };
+                  e.stopPropagation();
+                  updatePost(value);
+                }}
+              >
+                Update
+              </Button>,
+              <Button
+                type="danger"
+                onClick={e => {
+                  e.stopPropagation();
+                  deletePost(getKey);
+                  closeModal();
+                }}
+              >
+                Delete
+              </Button>,
+              <Button
+                onClick={() => {
+                  closeModal();
+                }}
+              >
+                close
+              </Button>,
+            ]
+          )
+        }
         onCancel={closeModal}
         // onOk={() => updatePost({ key, title, content })}
         // okText="수정"
         // cancelText="취소"
       >
-        <Typography.Title level={4}>Title</Typography.Title>
-        <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value, key)} />
-        <Typography.Title level={4}>Content</Typography.Title>
-        <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value, getKey)} />
+        {isDetail ? (
+          <div>
+            <Typography.Title level={4}>Title</Typography.Title>
+            <p>{title}</p>
+            <Typography.Title level={4}>Content</Typography.Title>
+            <p>{content}</p>
+          </div>
+        ) : (
+          <div>
+            <Typography.Title level={4}>Title</Typography.Title>
+            <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value, key)} />
+            <Typography.Title level={4}>Content</Typography.Title>
+            <Input.TextArea value={content} rows={6} placeholder="내용을 입력하세요." onChange={e => inputContent(e.target.value, getKey)} />
+          </div>
+        )}
       </Modal>
     </div>
   );
@@ -125,6 +145,7 @@ const BoardList = ({
 BoardList.propTypes = {
   id: PropTypes.number,
   key: PropTypes.string,
+  isDetail: PropTypes.bool,
   posts: PropTypes.array,
   visible: PropTypes.bool,
   secondModalVisible: PropTypes.bool,

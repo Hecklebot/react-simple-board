@@ -9,10 +9,10 @@ import BoardList from './components/BoardList';
 import * as actions from './redux/actions/BoardActions';
 
 const mapToStateToProps = state => {
-  const { id, isLoading, posts, title, content, visible, secondModalVisible } = state.BoardReducer;
+  const { id, isDetail, posts, title, content, visible, secondModalVisible } = state.BoardReducer;
   return {
     id,
-    isLoading,
+    isDetail,
     posts,
     title,
     content,
@@ -35,11 +35,14 @@ const mapDispatchToProps = dispatch => ({
     dispatch(actions.inputTitle(payload));
   },
   inputContent: content => dispatch(actions.inputContent(content)),
+  showUpdate: () => dispatch(actions.showUpdate()),
 });
 
 const App = ({
   id,
   key,
+  isDetail,
+  showUpdate,
   appInit,
   inputTitle,
   inputContent,
@@ -73,6 +76,8 @@ const App = ({
       <BoardList
         id={id}
         key={key}
+        isDetail={isDetail}
+        showUpdate={showUpdate}
         posts={posts}
         visible={visible}
         secondModalVisible={secondModalVisible}
@@ -108,6 +113,8 @@ App.propTypes = {
   deletePost: PropTypes.func,
   title: PropTypes.string,
   content: PropTypes.string,
+  isDetail: PropTypes.bool,
+  showUpdate: PropTypes.func,
 };
 
 export default connect(mapToStateToProps, mapDispatchToProps)(App);

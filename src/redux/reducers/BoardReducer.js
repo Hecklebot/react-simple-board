@@ -1,8 +1,20 @@
-import { APP_INIT, ADD_POST, UPDATE_POST, DELETE_POST, SHOW_MODAL, CLOSE_MODAL, INPUT_TITLE, INPUT_CONTENT, SHOW_SECOND_MODAL } from '../actions/BoardActions';
+import {
+  APP_INIT,
+  ADD_POST,
+  UPDATE_POST,
+  DELETE_POST,
+  SHOW_MODAL,
+  CLOSE_MODAL,
+  INPUT_TITLE,
+  INPUT_CONTENT,
+  SHOW_SECOND_MODAL,
+  SHOW_UPDATE,
+} from '../actions/BoardActions';
 
 const initState = {
   key: 0,
   id: 1,
+  isDetail: true,
   visible: false,
   secondModalVisible: false,
   title: '',
@@ -97,6 +109,12 @@ export default function BoardReducer(state = initState, action) {
         content: action.payload,
       };
 
+    case SHOW_UPDATE:
+      console.debug('showUpdate', state.isDetail);
+      return {
+        ...state,
+        isDetail: false,
+      };
     default:
       return {
         ...state,
