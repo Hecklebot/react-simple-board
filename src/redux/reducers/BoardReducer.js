@@ -12,6 +12,7 @@ const initState = {
 
 export default function BoardReducer(state = initState, action) {
   const getIndex = state.posts.findIndex(item => item.key === state.key);
+  const findValue = state.posts.find(item => item.key === action.payload);
   switch (action.type) {
     case APP_INIT:
       return {
@@ -69,10 +70,10 @@ export default function BoardReducer(state = initState, action) {
     case SHOW_SECOND_MODAL:
       return {
         ...state,
-        key: action.payload.value.key,
+        key: action.payload,
         secondModalVisible: true,
-        title: action.payload.value.title,
-        content: action.payload.value.content,
+        title: findValue.title,
+        content: findValue.content,
       };
 
     case CLOSE_MODAL:

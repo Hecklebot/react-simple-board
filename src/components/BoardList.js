@@ -20,6 +20,8 @@ const BoardList = ({
   content,
 }) => {
   let getKey;
+  // const getPost = posts.find(item => item.key === getKey);
+
   const column = [
     { title: '번호', dataIndex: 'id', key: 'id' },
     { title: '제목', dataIndex: 'title', key: 'title' },
@@ -38,36 +40,6 @@ const BoardList = ({
       <Table
         dataSource={posts}
         columns={column}
-        expandedRowRender={record => (
-          <div>
-            <p>{record.content}</p>
-            <Button
-              type="primary"
-              onClick={e => {
-                const getValue = posts.filter(item => item.key === getKey);
-                const value = {
-                  key: getValue[0].key,
-                  title: getValue[0].title,
-                  content: getValue[0].content,
-                };
-                e.stopPropagation();
-                showSecondModal({ value });
-              }}
-            >
-              Update
-            </Button>
-
-            <Button
-              type="danger"
-              onClick={e => {
-                e.stopPropagation();
-                deletePost(getKey);
-              }}
-            >
-              Delete
-            </Button>
-          </div>
-        )}
         pagination={{ pageSize: 20 }}
         expandRowByClick
         onRow={record => ({
@@ -76,6 +48,9 @@ const BoardList = ({
           },
           onMouseLeave: () => {
             getKey = record.key;
+          },
+          onClick: () => {
+            showSecondModal(getKey);
           },
         })}
       />
@@ -98,12 +73,45 @@ const BoardList = ({
       </Modal>
 
       <Modal
-        title={<Typography.Title level={2}>Update post</Typography.Title>}
+        title={<Typography.Title level={2}>post detail</Typography.Title>}
         visible={secondModalVisible}
-        onOk={() => updatePost({ key, title, content })}
+        footer={[
+          <Button
+            type="primary"
+            onClick={e => {
+              const value = {
+                key: getKey,
+                title,
+                content,
+              };
+              e.stopPropagation();
+              updatePost(value);
+            }}
+          >
+            Update
+          </Button>,
+          <Button
+            type="danger"
+            onClick={e => {
+              e.stopPropagation();
+              deletePost(getKey);
+              closeModal();
+            }}
+          >
+            Delete
+          </Button>,
+          <Button
+            onClick={() => {
+              closeModal();
+            }}
+          >
+            close
+          </Button>,
+        ]}
         onCancel={closeModal}
-        okText="수정"
-        cancelText="취소"
+        // onOk={() => updatePost({ key, title, content })}
+        // okText="수정"
+        // cancelText="취소"
       >
         <Typography.Title level={4}>Title</Typography.Title>
         <Input value={title} placeholder="제목을 입력하세요." onChange={e => inputTitle(e.target.value, key)} />

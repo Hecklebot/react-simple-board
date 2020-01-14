@@ -27,6 +27,7 @@ function* addData(data) {
   //   });
   // }
 }
+
 function* updateData(post) {
   yield axios.patch(`https://react-simple-board.firebaseio.com/post/${getKey}.json`, { title: post.payload.title, content: post.payload.content });
 }
@@ -36,7 +37,7 @@ function* deleteData(key) {
 }
 
 function getSecondModalValue(post) {
-  getKey = post.payload.key;
+  getKey = post.payload;
 }
 
 export default function* watch() {
