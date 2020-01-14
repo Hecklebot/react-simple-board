@@ -51,6 +51,7 @@ const BoardList = ({
             getKey = record.key;
           },
           onClick: () => {
+            console.debug('onClick', getKey);
             showSecondModal(getKey);
           },
         })}
@@ -78,20 +79,25 @@ const BoardList = ({
         visible={secondModalVisible}
         footer={
           isDetail ? (
-            <Button type="primary" onClick={showUpdate}>
+            <Button
+              type="primary"
+              onClick={() => {
+                showUpdate();
+                console.debug('click update', getKey);
+              }}
+            >
               수정
             </Button>
           ) : (
             [
               <Button
                 type="primary"
-                onClick={e => {
+                onClick={() => {
                   const value = {
                     key: getKey,
                     title,
                     content,
                   };
-                  e.stopPropagation();
                   updatePost(value);
                 }}
               >
@@ -99,28 +105,16 @@ const BoardList = ({
               </Button>,
               <Button
                 type="danger"
-                onClick={e => {
-                  e.stopPropagation();
-                  deletePost(getKey);
-                  closeModal();
+                onClick={() => {
+                  deletePost();
                 }}
               >
                 Delete
-              </Button>,
-              <Button
-                onClick={() => {
-                  closeModal();
-                }}
-              >
-                close
               </Button>,
             ]
           )
         }
         onCancel={closeModal}
-        // onOk={() => updatePost({ key, title, content })}
-        // okText="수정"
-        // cancelText="취소"
       >
         {isDetail ? (
           <div>
@@ -146,6 +140,7 @@ BoardList.propTypes = {
   id: PropTypes.number,
   key: PropTypes.string,
   isDetail: PropTypes.bool,
+  showUpdate: PropTypes.func,
   posts: PropTypes.array,
   visible: PropTypes.bool,
   secondModalVisible: PropTypes.bool,

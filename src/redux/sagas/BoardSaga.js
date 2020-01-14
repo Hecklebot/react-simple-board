@@ -32,8 +32,8 @@ function* updateData(post) {
   yield axios.patch(`https://react-simple-board.firebaseio.com/post/${getKey}.json`, { title: post.payload.title, content: post.payload.content });
 }
 
-function* deleteData(key) {
-  yield axios.delete(`https://react-simple-board.firebaseio.com/post/${key.payload}.json`);
+function* deleteData() {
+  yield axios.delete(`https://react-simple-board.firebaseio.com/post/${getKey}.json`);
 }
 
 function getSecondModalValue(post) {

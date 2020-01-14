@@ -25,7 +25,7 @@ const mapDispatchToProps = dispatch => ({
   appInit: posts => dispatch(actions.appInit(posts)),
   addPost: post => dispatch(actions.addPost(post)),
   updatePost: post => dispatch(actions.updatePost(post)),
-  deletePost: key => dispatch(actions.deletePost(key)),
+  deletePost: () => dispatch(actions.deletePost()),
   showModal: () => dispatch(actions.showModal()),
   showSecondModal: payload => {
     dispatch(actions.showSecondModal(payload));

@@ -65,12 +65,15 @@ export default function BoardReducer(state = initState, action) {
         secondModalVisible: false,
         title: '',
         content: '',
+        isDetail: true,
       };
 
     case DELETE_POST:
       return {
         ...state,
-        posts: state.posts.filter(item => item.key !== parseInt(action.payload, 10)),
+        posts: state.posts.filter(item => item.key !== state.key),
+        secondModalVisible: false,
+        isDetail: true,
       };
 
     case SHOW_MODAL:
@@ -93,6 +96,7 @@ export default function BoardReducer(state = initState, action) {
         ...state,
         visible: false,
         secondModalVisible: false,
+        isDetail: true,
         title: '',
         content: '',
       };
@@ -110,7 +114,6 @@ export default function BoardReducer(state = initState, action) {
       };
 
     case SHOW_UPDATE:
-      console.debug('showUpdate', state.isDetail);
       return {
         ...state,
         isDetail: false,
