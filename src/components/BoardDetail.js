@@ -4,7 +4,7 @@ import React from 'react';
 
 const BoardDetail = (/* { match } */) => (
   // const data = axios.get(`https://react-simple-board.firebaseio.com/post/${match.params}.json`);
-  <div>BoardDetail</div>
+  <div>Board Detail</div>
 );
 BoardDetail.propTypes = {
   // match: PropTypes.func,
